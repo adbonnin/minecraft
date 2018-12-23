@@ -1,0 +1,419 @@
+settings:
+  default-block-group-weight: 100
+  default-creature-group-weight: 1
+  default-chest-item-count: 1
+  prevent-sand-fall-with-cactus: true
+
+worlds:
+  world:
+    height: 128
+    block-groups:
+      - WORLD_COMMON:5999
+      - WORLD_UNCOMMON:2200
+      - WORLD_RARE:1620
+      - WORLD_EPIC:177
+      - WORLD_MYTHIC:4
+    chest-items:
+      - WORLD_COMMON:94
+      - WORLD_RARE:4
+      - WORLD_EPIC:2
+    chest-quantities:
+      - "4:2"
+      - "10:8"
+    creature-spawners:
+      - WORLD_COMMON_HOSTILE:11
+      - WORLD_RARE_HOSTILE:2
+      - WORLD_COMMON_PEACEFULL:86
+      - WORLD_RARE_PEACEFULL:3
+
+  world_nether:
+    height: 128
+    block-groups:
+      - NETHER_COMMON:99
+      - NETHER_RARE:1
+    chest-items:
+      - NETHER_COMMON:98
+      - NETHER_RARE:2
+    chest-quantities:
+      - "2:2"
+      - "5:8"
+    creature-spawners:
+      - NETHER_COMMON:2
+      - NETHER_RARE:98
+
+  world_the_end:
+    height: 128
+    block-groups:
+      - END_COMMON:99
+      - END_RARE:1
+    chest-items:
+      - END_COMMON:98
+      - END_RARE:2
+    chest-quantities:
+      - "2:2"
+      - "5:8"
+    creature-spawners:
+      - END_COMMON:1
+
+block-groups:
+  DIRT_TYPE:
+    - DIRT
+    - COARSE_DIRT
+    - PODZOL
+
+  PRISMARINE_TYPE:
+    - PRISMARINE
+    - PRISMARINE_BRICKS
+    - DARK_PRISMARINE
+
+  PLANKS_TYPE:
+    - ACACIA_PLANKS
+    - BIRCH_PLANKS
+    - DARK_OAK_PLANKS
+    - JUNGLE_PLANKS
+    - OAK_PLANKS
+    - SPRUCE_PLANKS
+
+  WOOD_TYPE:
+    - OAK_WOOD
+    - SPRUCE_WOOD
+    - BIRCH_WOOD
+    - JUNGLE_WOOD
+    - ACACIA_WOOD
+    - DARK_OAK_WOOD
+
+  WOOL_TYPE:
+    - BLACK_WOOL
+    - BLUE_WOOL
+    - BROWN_WOOL
+    - CYAN_WOOL
+    - GRAY_WOOL
+    - GREEN_WOOL
+    - LIGHT_BLUE_WOOL
+    - LIGHT_GRAY_WOOL
+    - LIME_WOOL
+    - MAGENTA_WOOL
+    - ORANGE_WOOL
+    - PINK_WOOL
+    - PURPLE_WOOL
+    - RED_WOOL
+    - WHITE_WOOL
+    - YELLOW_WOOL
+
+  RED_SANDSTONE_TYPE:
+    - RED_SANDSTONE
+    - CUT_RED_SANDSTONE
+    - CHISELED_RED_SANDSTONE
+    - SMOOTH_RED_SANDSTONE
+
+  STONE_BRICKS_TYPE:
+    - STONE_BRICKS
+    - CRACKED_STONE_BRICKS
+    - MOSSY_STONE_BRICKS
+    - CHISELED_STONE_BRICKS
+
+  STONE_TYPE:
+    - STONE
+    - GRANITE
+    - POLISHED_GRANITE
+    - DIORITE
+    - POLISHED_DIORITE
+    - ANDESITE
+    - POLISHED_ANDESITE
+
+  SAND_TYPE:
+    - SAND
+    - RED_SAND
+
+  COOKED_TYPE:
+    - COOKED_BEEF
+    - COOKED_CHICKEN
+    - COOKED_COD
+    - COOKED_MUTTON
+    - COOKED_PORKCHOP
+    - COOKED_RABBIT
+    - COOKED_SALMON
+
+  WORLD_COMMON_SPAWN_EGG:
+    - ZOMBIE_SPAWN_EGG
+    - SKELETON_SPAWN_EGG
+    - SPIDER_SPAWN_EGG
+    - SLIME_SPAWN_EGG
+
+  WORLD_UNCOMMON_SPAWN_EGG:
+    - PIG_SPAWN_EGG
+    - SHEEP_SPAWN_EGG
+    - CHICKEN_SPAWN_EGG
+
+  WORLD_RARE_SPAWN_EGG:
+    - COW_SPAWN_EGG
+
+  WORLD_EPIC_SPAWN_EGG:
+    - CREEPER_SPAWN_EGG
+    - ENDERMAN_SPAWN_EGG
+
+  WORLD_SPAWN_EGG:
+    - WORLD_COMMON_SPAWN_EGG:86
+    - WORLD_UNCOMMON_SPAWN_EGG:9
+    - WORLD_RARE_SPAWN_EGG:3
+    - WORLD_EPIC_SPAWN_EGG:2
+
+  NETHER_COMMON_SPAWN_EGG:
+    - ZOMBIE_PIGMAN_SPAWN_EGG
+    - SKELETON_SPAWN_EGG
+
+  NETHER_RARE_SPAWN_EGG:
+    - BLAZE_SPAWN_EGG
+    - GHAST_SPAWN_EGG
+    - MAGMA_CUBE_SPAWN_EGG
+
+  NETHER_SPAWN_EGG:
+    - NETHER_COMMON_SPAWN_EGG:98
+    - NETHER_RARE_SPAWN_EGG:2
+
+  END_SPAWN_EGG:
+    - ENDERMAN_SPAWN_EGG
+    - ENDERMITE_SPAWN_EGG
+
+  WORLD_COMMON:
+    - STONE_TYPE
+    - GRASS_BLOCK
+    - DIRT_TYPE
+    - PLANKS_TYPE
+    - SAND_TYPE
+    - COAL_ORE
+    - WOOD_TYPE
+
+  WORLD_UNCOMMON:
+    - GRAVEL
+    - IRON_ORE
+    - SANDSTONE
+    - MOSSY_COBBLESTONE
+    - CLAY
+    - NETHERRACK
+    - RED_SANDSTONE_TYPE
+
+  WORLD_RARE:
+    - GOLD_ORE
+    - LAPIS_ORE
+    - COBWEB
+    - WOOL_TYPE
+    - BRICKS
+    - OBSIDIAN
+    - REDSTONE_ORE
+    - PUMPKIN
+    - STONE_BRICKS_TYPE
+    - MELON
+    - NETHER_BRICKS
+    - NETHER_QUARTZ_ORE
+    - PRISMARINE_TYPE
+    - HAY_BLOCK
+    - PURPUR_BLOCK
+    - PURPUR_PILLAR
+
+  WORLD_EPIC:
+    - WATER
+    - LAVA
+    - TNT
+    - BOOKSHELF
+    - SPAWNER
+    - CHEST
+    - DIAMOND_ORE
+    - SOUL_SAND
+    - GLOWSTONE
+    - MYCELIUM
+    - EMERALD_ORE
+    - REDSTONE_BLOCK
+    - QUARTZ_BLOCK
+
+  WORLD_MYTHIC:
+    - LAPIS_BLOCK
+    - GOLD_BLOCK
+    - IRON_BLOCK
+    - DIAMOND_BLOCK
+    - ENCHANTING_TABLE
+    - BREWING_STAND
+    - EMERALD_BLOCK
+
+  NETHER_COMMON:
+    - NETHERRACK:600
+    - NETHER_BRICKS
+    - NETHER_BRICK_FENCE
+    - NETHER_QUARTZ_ORE
+
+  NETHER_RARE:
+    - LAVA
+    - GRAVEL
+    - SPAWNER
+    - CHEST
+    - SOUL_SAND
+    - GLOWSTONE
+    - QUARTZ_BLOCK
+
+  END_COMMON:
+    - OBSIDIAN
+    - END_STONE:700
+
+  END_RARE:
+    - SPAWNER
+    - CHEST
+
+chest-items:
+  WORLD_COMMON:
+    - DIRT:32
+    - GRASS:4
+    - COBBLESTONE:32
+    - WOOD_TYPE:12:200
+    - BRICKS:6
+    - CACTUS:6
+    - APPLE:2
+    - ARROW:16
+    - COAL:12
+    - IRON_INGOT:6
+    - GOLD_INGOT:4
+    - STRING:12
+    - WHEAT_SEEDS:5
+    - GOLDEN_APPLE:2
+    - REDSTONE:16
+    - COOKED_TYPE:10
+    - BONE:8
+    - PUMPKIN_SEEDS:5
+    - MELON_SEEDS:5
+    - POTATO:5
+    - GOLDEN_CARROT:3
+
+  WORLD_RARE:
+    - SPONGE
+    - GOLD_BLOCK
+    - IRON_BLOCK:2
+    - TNT:2
+    - BOOKSHELF:2
+    - OBSIDIAN:4
+    - REDSTONE_BLOCK
+    - IRON_SHOVEL
+    - IRON_PICKAXE
+    - IRON_AXE
+    - IRON_SWORD
+    - DIAMOND_SWORD
+    - DIAMOND_SHOVEL
+    - DIAMOND_PICKAXE
+    - DIAMOND_AXE
+    - DIAMOND_HOE
+    - IRON_HOE
+    - DIAMOND:3
+    - IRON_HELMET
+    - IRON_CHESTPLATE
+    - IRON_LEGGINGS
+    - IRON_BOOTS
+    - DIAMOND_HELMET
+    - DIAMOND_CHESTPLATE
+    - DIAMOND_LEGGINGS
+    - DIAMOND_BOOTS
+    - REPEATER:2
+    - ENDER_PEARL
+    - EMERALD:3
+
+  WORLD_EPIC:
+    - WORLD_SPAWN_EGG
+
+  NETHER_COMMON:
+    - NETHERRACK:12
+    - GLOWSTONE:4
+    - NETHER_BRICK_FENCE:6
+    - NETHER_BRICK_STAIRS:6
+    - NETHER_QUARTZ_ORE:4
+    - NETHER_BRICKS:4
+    - NETHER_BRICKS:16
+    - LAVA_BUCKET
+    - QUARTZ:4
+    - ROTTEN_FLESH:4
+    - GLOWSTONE_DUST:16
+
+  NETHER_RARE:
+    - GRAVEL:4
+    - NETHER_WART:4
+    - NETHER_STAR
+    - BLAZE_ROD
+    - BLAZE_POWDER:2
+    - NETHER_SPAWN_EGG
+    - GOLD_NUGGET:9
+    - GOLDEN_SWORD
+    - MAGMA_CREAM
+    - GOLDEN_HELMET
+    - GUNPOWDER:5
+    - GHAST_TEAR
+
+  END_COMMON:
+    - END_SPAWN_EGG
+    - ENDER_EYE
+    - ENDER_PEARL
+
+  END_RARE:
+    - OBSIDIAN:4
+    - END_STONE:16
+
+plants:
+  GRASS_BLOCK:
+    - RED_MUSHROOM:5
+    - BROWN_MUSHROOM:5
+    - DANDELION:1
+    - POPPY:1
+    - BLUE_ORCHID:1
+    - ALLIUM:1
+    - AZURE_BLUET:1
+    - RED_TULIP:1
+    - ORANGE_TULIP:1
+    - WHITE_TULIP:1
+    - PINK_TULIP:1
+    - OXEYE_DAISY:1
+    - SUGAR_CANE:5
+    - AIR:75
+
+  DIRT:
+    - ACACIA_SAPLING:1
+    - BIRCH_SAPLING:1
+    - DARK_OAK_SAPLING:1
+    - JUNGLE_SAPLING:1
+    - OAK_SAPLING:1
+    - SPRUCE_SAPLING:1
+    - AIR:45
+
+  SAND:
+    - CACTUS:1
+    - AIR:9
+
+  SOUL_SAND:
+    - NETHER_WART:2
+    - AIR:8
+
+creature-groups:
+  WORLD_COMMON_HOSTILE:
+    - ZOMBIE
+    - SKELETON
+    - SPIDER
+    - SLIME
+
+  WORLD_RARE_HOSTILE:
+    - CREEPER
+    - ENDERMAN
+
+  WORLD_COMMON_PEACEFULL:
+    - PIG
+    - SHEEP
+    - CHICKEN
+
+  WORLD_RARE_PEACEFULL:
+    - COW
+    - MUSHROOM_COW
+
+  NETHER_COMMON:
+    - PIG_ZOMBIE
+    - SKELETON
+
+  NETHER_RARE:
+    - BLAZE
+    - GHAST
+    - MAGMA_CUBE
+
+  END_COMMON:
+    - ENDERMAN

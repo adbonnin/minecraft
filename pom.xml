@@ -1,0 +1,131 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <name>${project.artifactId}</name>
+
+    <groupId>fr.adbonnin.mc</groupId>
+    <artifactId>mc-parent</artifactId>
+    <version>1.0</version>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>mc-skygrid</module>
+    </modules>
+
+    <properties>
+        <author>Adrien Bonnin</author>
+        <bukkit-api.version>1.13</bukkit-api.version>
+        <server.dir>C:/tools/spigot-server</server.dir>
+
+        <xtra.version>1.0.0</xtra.version>
+        <bukkit.version>1.13.2-R0.1-SNAPSHOT</bukkit.version>
+
+        <junit.version>4.10</junit.version>
+        <spock.version>1.0-groovy-2.4</spock.version>
+        <groovy.version>2.4.10</groovy.version>
+        <cglib.version>3.2.6</cglib.version>
+        <objenesis.version>2.6</objenesis.version>
+
+        <gmaven-plugin.version>1.5</gmaven-plugin.version>
+        <surefire-plugin.version>2.20.1</surefire-plugin.version>
+        <jarjar-maven-plugin.version>1.9</jarjar-maven-plugin.version>
+        <maven-source-plugin>3.0.1</maven-source-plugin>
+
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>fr.adbonnin.xtra</groupId>
+                <artifactId>xtra-bukkit</artifactId>
+                <version>${xtra.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>fr.adbonnin.xtra</groupId>
+                <artifactId>xtra</artifactId>
+                <version>${xtra.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.bukkit</groupId>
+                <artifactId>bukkit</artifactId>
+                <version>${bukkit.version}</version>
+            </dependency>
+
+            <!-- Test dependencies -->
+            <dependency>
+                <groupId>org.spockframework</groupId>
+                <artifactId>spock-core</artifactId>
+                <version>${spock.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>${groovy.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib-nodep</artifactId>
+                <version>${cglib.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.objenesis</groupId>
+                <artifactId>objenesis</artifactId>
+                <version>${objenesis.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.gmavenplus</groupId>
+                    <artifactId>gmavenplus-plugin</artifactId>
+                    <version>${gmaven-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${surefire-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>jarjar-maven-plugin</artifactId>
+                    <version>${jarjar-maven-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-source-plugin}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

@@ -1,0 +1,11 @@
+name: ${name}
+version: ${version}
+api-version: ${bukkit-api.version}
+
+description: ${description}
+author: ${author}
+website: ${url}
+
+main: fr.adbonnin.mc.skygrid.SkyGrid
+
+load: STARTUP

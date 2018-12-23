@@ -1,0 +1,168 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>fr.adbonnin.mc</groupId>
+        <artifactId>mc-parent</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <artifactId>skygrid</artifactId>
+
+    <name>${project.artifactId}</name>
+    <description>Minecraft SkyGrid Plugin</description>
+    <url>https://github.com/adbonnin/minecraft</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>fr.adbonnin.xtra</groupId>
+            <artifactId>xtra</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>fr.adbonnin.xtra</groupId>
+            <artifactId>xtra-bukkit</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.objenesis</groupId>
+            <artifactId>objenesis</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>plugin.yml</include>
+                </includes>
+            </resource>
+
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                    <exclude>plugin.yml</exclude>
+                </excludes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <useFile>false</useFile>
+                    <includes>
+                        <include>**/*Spec.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>jarjar-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jarjar</goal>
+                        </goals>
+                        <configuration>
+                            <overwrite>true</overwrite>
+                            <includes>
+                                <include>fr.adbonnin.xtra:xtra</include>
+                                <include>fr.adbonnin.xtra:xtra-bukkit</include>
+                            </includes>
+                            <rules>
+                                <rule>
+                                    <pattern>fr.adbonnin.xtra.**</pattern>
+                                    <result>fr.adbonnin.mc.skygrid.xtra.@1</result>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>install-plugin</id>
+                        <phase>install</phase>
+                        <configuration>
+                            <tasks>
+                                <copy todir="${server.dir}/plugins">
+                                    <fileset dir="${project.build.directory}">
+                                        <include name="${project.build.finalName}.jar"/>
+                                    </fileset>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

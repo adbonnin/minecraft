@@ -1,0 +1,9 @@
+libs/
+
+# IntelliJ
+.idea/
+target/
+
+# Spigot
+logs
+server.properties
