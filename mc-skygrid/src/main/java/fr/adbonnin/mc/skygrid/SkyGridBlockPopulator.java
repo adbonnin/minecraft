@@ -5,7 +5,6 @@ import fr.adbonnin.mc.skygrid.model.SkyGridWorld;
 import fr.adbonnin.mc.skygrid.model.block.BlockGroup;
 import fr.adbonnin.mc.skygrid.model.chest.ChestItem;
 import fr.adbonnin.mc.skygrid.model.chest.ChestQuantity;
-import fr.adbonnin.xtra.bukkit.logging.BukkitLogger;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -16,27 +15,21 @@ import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import static fr.adbonnin.mc.skygrid.XtraSkyGrid.blockToString;
-import static fr.adbonnin.mc.skygrid.XtraSkyGrid.chunkToString;
 import static java.util.Objects.requireNonNull;
 
 public class SkyGridBlockPopulator extends BlockPopulator {
 
     private final SkyGridWorld skyGridWorld;
 
-    private final BukkitLogger log;
-
     private final Config config;
 
     public SkyGridBlockPopulator(SkyGridWorld skyGridWorld, SkyGrid plugin) {
         this.skyGridWorld = requireNonNull(skyGridWorld);
-        this.log = new BukkitLogger(plugin, SkyGridBlockPopulator.class);
         this.config = plugin.getSkyGridConfig();
     }
 
@@ -103,10 +96,6 @@ public class SkyGridBlockPopulator extends BlockPopulator {
         }
 
         chest.getInventory().addItem(items);
-        log.debug("Chest has been populated; " +
-                "chunk: " + chunkToString(block.getChunk()) + ", " +
-                "block: " + blockToString(block) + ", " +
-                "with: " + result);
     }
 
     public void populateSpawner(Block block, Random random) {
@@ -118,10 +107,6 @@ public class SkyGridBlockPopulator extends BlockPopulator {
         }
 
         spawner.setSpawnedType(creature);
-        log.debug("Creature spawner has been populated; " +
-                "chunk: " + chunkToString(block.getChunk()) + ", " +
-                "block: " + blockToString(block) + ", " +
-                "with: " + creature.name());
     }
 
     public void populatePlant(Block block, BlockGroup plants, Random random) {
@@ -137,9 +122,5 @@ public class SkyGridBlockPopulator extends BlockPopulator {
         }
 
         up.setType(plant, false);
-        log.debug("Block has been planted; " +
-                "chunk: " + chunkToString(block.getChunk()) + ", " +
-                "block: " + blockToString(block) + ", " +
-                "plant: " + plant.name());
     }
 }

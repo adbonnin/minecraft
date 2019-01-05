@@ -7,6 +7,4 @@ import java.util.Random;
 public interface CreatureGroup {
 
     EntityType getRandomCreature(Random random);
-
-    void addCreatureGroup(double weight, CreatureGroup creatureGroup);
 }

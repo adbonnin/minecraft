@@ -1,103 +1,43 @@
 package fr.adbonnin.mc.skygrid.mapper;
 
 import fr.adbonnin.mc.skygrid.model.Config;
-import fr.adbonnin.mc.skygrid.model.SkyGridWorld;
-import fr.adbonnin.mc.skygrid.model.block.BlockGroup;
-import fr.adbonnin.mc.skygrid.model.chest.ChestItems;
-import fr.adbonnin.mc.skygrid.model.creature.CreatureGroup;
-import fr.adbonnin.xtra.bukkit.yaml.ObjectNode;
 import fr.adbonnin.xtra.bukkit.yaml.YamlNode;
-import org.bukkit.Material;
+import fr.adbonnin.xtra.bukkit.yaml.node.ObjectNode;
 import org.bukkit.configuration.ConfigurationSection;
 
-import java.util.Iterator;
-import java.util.Map;
+public class ConfigMapper {
 
-import static fr.adbonnin.mc.skygrid.model.Config.*;
+    public static final double DEFAULT_BLOCK_GROUP_WEIGHT = 100;
 
-public enum ConfigMapper {
-    INSTANCE;
+    public static final double DEFAULT_CREATURE_GROUP_WEIGHT = 1;
 
-    public Config map(ConfigurationSection config) {
-        return map(new ObjectNode(config));
+    public static final int DEFAULT_CHEST_ITEM_COUNT = 1;
+
+    public static final boolean DEFAULT_PREVENT_SAND_FALL_WITH_CACTUS = true;
+
+    public Config map(ConfigurationSection yaml) {
+        return map(new ObjectNode(yaml));
     }
 
     public Config map(YamlNode configNode) {
         final Config config = new Config();
-        mapSettings(configNode.get("settings"), config);
-        mapBlockGroups(configNode.get("block-groups"), config);
-        mapChestItems(configNode.get("chest-items"), config);
-        mapPlants(configNode.get("plants"), config);
-        mapCreatureGroups(configNode.get("creature-groups"), config);
-        mapWorlds(configNode.get("worlds"), config);
+
+        final YamlNode settingsNode = configNode.path("settings");
+        config.setDefaultBlockGroupWeight(settingsNode.asDouble("default-block-group-weight", DEFAULT_BLOCK_GROUP_WEIGHT));
+        config.setDefaultCreatureGroupWeight(settingsNode.asDouble("default-creature-group-weight", DEFAULT_CREATURE_GROUP_WEIGHT));
+        config.setDefaultChestItemCount(settingsNode.asInt("default-chest-item-count", DEFAULT_CHEST_ITEM_COUNT));
+        config.setPreventSandFallWithCactus(settingsNode.asBoolean("prevent-sand-fall-with-cactus", DEFAULT_PREVENT_SAND_FALL_WITH_CACTUS));
+
+        final BlockGroupMapper blockGroupMapper = new BlockGroupMapper(config);
+        final ChestItemsMapper chestItemsMapper = new ChestItemsMapper(config);
+        final CreatureGroupMapper creatureGroupMapper = new CreatureGroupMapper(config);
+        final WorldMapper worldMapper = new WorldMapper(config);
+
+        config.addBlockGroups(blockGroupMapper.mapByName(configNode.path("block-groups")));
+        config.addPlants(blockGroupMapper.mapByMaterial(configNode.path("plants")));
+        config.addChestItems(chestItemsMapper.mapByName(configNode.path("chest-items")));
+        config.addCreatureGroups(creatureGroupMapper.mapByName(configNode.path("creature-groups")));
+        config.addWorlds(worldMapper.mapByName(configNode.path("worlds")));
         return config;
-    }
-
-    private void mapSettings(YamlNode settingsNode, Config config) {
-        config.setDefaultBlockGroupWeight(settingsNode.get("default-block-group-weight").asDouble(DEFAULT_BLOCK_GROUP_WEIGHT));
-        config.setDefaultCreatureGroupWeight(settingsNode.get("default-creature-group-weight").asDouble(DEFAULT_CREATURE_GROUP_WEIGHT));
-        config.setDefaultChestItemCount(settingsNode.get("default-chest-item-count").asInt(DEFAULT_CHEST_ITEM_COUNT));
-        config.setPreventSandFallWithCactus(settingsNode.get("prevent-sand-fall-with-cactus").asBoolean(DEFAULT_PREVENT_SAND_FALL_WITH_CACTUS));
-    }
-
-    private void mapBlockGroups(YamlNode blockGroupsNode, Config config) {
-        final Iterator<Map.Entry<String, YamlNode>> itr = blockGroupsNode.fields();
-        while (itr.hasNext()) {
-            final Map.Entry<String, YamlNode> next = itr.next();
-
-            final String name = next.getKey();
-            final BlockGroup blockGroup = BlockGroupMapper.INSTANCE.map(next.getValue(), config);
-            config.addBlockGroup(name, blockGroup);
-        }
-    }
-
-    private void mapChestItems(YamlNode chestItemsNode, Config config) {
-        final Iterator<Map.Entry<String, YamlNode>> itr = chestItemsNode.fields();
-        while (itr.hasNext()) {
-            final Map.Entry<String, YamlNode> next = itr.next();
-
-            final String name = next.getKey();
-            final ChestItems chestItems = ChestItemsMapper.INSTANCE.map(next.getValue(), config);
-            config.addChestItem(name, chestItems);
-        }
-    }
-
-    private void mapPlants(YamlNode plantsNode, Config config) {
-        final Iterator<Map.Entry<String, YamlNode>> itr = plantsNode.fields();
-        while (itr.hasNext()) {
-            final Map.Entry<String, YamlNode> next = itr.next();
-
-            final String name = next.getKey();
-            final Material material = config.findMaterial(name);
-            if (material == null) {
-                throw new IllegalArgumentException("material can't be found; " +
-                        "name: " + name);
-            }
-
-            final BlockGroup plants = BlockGroupMapper.INSTANCE.map(next.getValue(), config);
-            config.addPlants(material, plants);
-        }
-    }
-
-    private void mapCreatureGroups(YamlNode creatureGroupsNode, Config config) {
-        final Iterator<Map.Entry<String, YamlNode>> itr = creatureGroupsNode.fields();
-        while (itr.hasNext()) {
-            final Map.Entry<String, YamlNode> next = itr.next();
-
-            final String name = next.getKey();
-            final CreatureGroup creatureGroup = CreatureGroupMapper.INSTANCE.map(next.getValue(), config);
-            config.addCreatureGroup(name, creatureGroup);
-        }
-    }
-
-    private void mapWorlds(YamlNode worldsNode, Config config) {
-        final Iterator<Map.Entry<String, YamlNode>> itr = worldsNode.fields();
-        while (itr.hasNext()) {
-            final Map.Entry<String, YamlNode> next = itr.next();
-
-            final String name = next.getKey();
-            final SkyGridWorld world = WorldMapper.INSTANCE.map(next.getValue(), config);
-            config.addWorld(name, world);
-        }
     }
 }

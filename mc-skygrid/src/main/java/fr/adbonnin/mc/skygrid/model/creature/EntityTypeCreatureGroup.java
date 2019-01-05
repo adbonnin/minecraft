@@ -18,9 +18,4 @@ public class EntityTypeCreatureGroup implements CreatureGroup {
     public EntityType getRandomCreature(Random random) {
         return entityType;
     }
-
-    @Override
-    public void addCreatureGroup(double weight, CreatureGroup creatureGroup) {
-        throw new UnsupportedOperationException();
-    }
 }

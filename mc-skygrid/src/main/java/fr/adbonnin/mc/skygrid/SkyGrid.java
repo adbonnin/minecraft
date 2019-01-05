@@ -17,7 +17,7 @@ public class SkyGrid extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        onEnable(ConfigMapper.INSTANCE.map(getConfig()));
+        onEnable(new ConfigMapper().map(getConfig().getDefaultSection()));
     }
 
     public void onEnable(Config config) {

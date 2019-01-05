@@ -3,6 +3,8 @@ package fr.adbonnin.mc.skygrid.model.creature;
 import fr.adbonnin.xtra.collect.RandomCollection;
 import org.bukkit.entity.EntityType;
 
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
 
 public class RandomCreatureGroup implements CreatureGroup {
@@ -14,7 +16,7 @@ public class RandomCreatureGroup implements CreatureGroup {
         return creatures.get(random).getRandomCreature(random);
     }
 
-    public void addCreatureGroup(double weight, CreatureGroup creatureGroup) {
-        creatures.add(weight, creatureGroup);
+    public void addCreatureGroups(Iterator<? extends Map.Entry<? extends CreatureGroup, ? extends Number>> creatureGroups) {
+        creatures.addAll(creatureGroups);
     }
 }

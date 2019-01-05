@@ -2,16 +2,16 @@ package fr.adbonnin.mc.skygrid.model.chest;
 
 import fr.adbonnin.xtra.collect.RandomCollection;
 
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
-
-import static java.util.Objects.requireNonNull;
 
 public class ChestItems {
 
     private final RandomCollection<ChestItem> chestItems = new RandomCollection<>();
 
-    public void addChestItem(double weight, ChestItem chestItem) {
-        chestItems.add(weight, chestItem);
+    public void addChestItem(ChestItem chestItem, double weight) {
+        this.chestItems.add(chestItem, weight);
     }
 
     public ChestItem getRandomChestItem(Random random) {

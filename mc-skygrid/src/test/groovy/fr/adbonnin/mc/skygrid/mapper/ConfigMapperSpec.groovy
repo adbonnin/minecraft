@@ -1,8 +1,7 @@
 package fr.adbonnin.mc.skygrid.mapper
 
-
-import fr.adbonnin.xtra.bukkit.yaml.ObjectNode
 import fr.adbonnin.xtra.bukkit.yaml.YamlNode
+import fr.adbonnin.xtra.bukkit.yaml.node.ObjectNode
 import fr.adbonnin.xtra.io.XtraIO
 import org.bukkit.configuration.file.YamlConfiguration
 import spock.lang.Specification
@@ -11,7 +10,7 @@ import spock.lang.Subject
 class ConfigMapperSpec extends Specification {
 
     @Subject
-    def mapper = ConfigMapper.INSTANCE
+    def mapper = new ConfigMapper()
 
     void "should map configuration"() {
         given:

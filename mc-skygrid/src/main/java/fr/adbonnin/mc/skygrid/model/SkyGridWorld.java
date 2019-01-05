@@ -3,7 +3,7 @@ package fr.adbonnin.mc.skygrid.model;
 import fr.adbonnin.mc.skygrid.LocationFunction;
 import fr.adbonnin.mc.skygrid.XtraSkyGrid;
 import fr.adbonnin.mc.skygrid.model.block.BlockGroup;
-import fr.adbonnin.mc.skygrid.model.block.BlockGroupContainer;
+import fr.adbonnin.mc.skygrid.model.block.RandomBlockGroup;
 import fr.adbonnin.mc.skygrid.model.chest.ChestItem;
 import fr.adbonnin.mc.skygrid.model.chest.ChestItems;
 import fr.adbonnin.mc.skygrid.model.chest.ChestQuantity;
@@ -13,33 +13,34 @@ import fr.adbonnin.xtra.collect.RandomCollection;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
 
-public class SkyGridWorld implements BlockGroupContainer, CreatureGroup {
+public class SkyGridWorld {
 
-    private int height;
+    public static final int DEFAULT_HEIGHT = 128;
 
-    private final RandomCollection<BlockGroup> blockGroups = new RandomCollection<>();
+    private int height = DEFAULT_HEIGHT;
+
+    private final RandomBlockGroup blockGroups = new RandomBlockGroup();
 
     private final RandomCollection<ChestItems> chestItems  = new RandomCollection<>();
 
     private final RandomCollection<ChestQuantity> chestQuantities = new RandomCollection<>();
 
-    private final RandomCreatureGroup randomCreatureGroup = new RandomCreatureGroup();
+    private final RandomCreatureGroup creatureGroup = new RandomCreatureGroup();
 
     public void setHeight(int height) {
         this.height = height;
     }
 
-    @Override
     public Material getRandomBlock(Random random) {
-        final BlockGroup blockGroup = blockGroups.get(random);
-        return blockGroup == null ? null : blockGroup.getRandomBlock(random);
+        return blockGroups.getRandomBlock(random);
     }
 
-    @Override
-    public void addBlockGroup(double weight, BlockGroup block) {
-        this.blockGroups.add(weight, block);
+    public void addBlockGroups(Iterator<? extends Map.Entry<? extends BlockGroup, ? extends Number>> blockGroups) {
+        this.blockGroups.addBlockGroups(blockGroups);
     }
 
     public ChestItem getRandomChestItem(Random random) {
@@ -47,26 +48,24 @@ public class SkyGridWorld implements BlockGroupContainer, CreatureGroup {
         return chestItem == null ? null : chestItem.getRandomChestItem(random);
     }
 
-    public void addChestItems(double weight, ChestItems chestItems) {
-        this.chestItems.add(weight, chestItems);
+    public void addChestItems(Iterator<? extends Map.Entry<? extends ChestItems, ? extends Number>> chestItems) {
+        this.chestItems.addAll(chestItems);
     }
 
-    @Override
     public EntityType getRandomCreature(Random random) {
-        return randomCreatureGroup.getRandomCreature(random);
+        return creatureGroup.getRandomCreature(random);
     }
 
-    @Override
-    public void addCreatureGroup(double weight, CreatureGroup creatureGroup) {
-        randomCreatureGroup.addCreatureGroup(weight, creatureGroup);
+    public void addCreatureGroups(Iterator<? extends Map.Entry<? extends CreatureGroup, ? extends Number>> creatureGroups) {
+        creatureGroup.addCreatureGroups(creatureGroups);
     }
 
     public ChestQuantity getRandomChestQuantity(Random random) {
         return chestQuantities.get(random);
     }
 
-    public void addChestQuantity(double weight, ChestQuantity chestQuantity) {
-        this.chestQuantities.add(weight, chestQuantity);
+    public void addChestQuantities(Iterator<? extends Map.Entry<? extends ChestQuantity, ? extends Number>> quantities) {
+        this.chestQuantities.addAll(quantities);
     }
 
     public int getHighestBlockY() {

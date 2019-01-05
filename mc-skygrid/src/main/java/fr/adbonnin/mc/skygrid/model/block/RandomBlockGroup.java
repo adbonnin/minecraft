@@ -3,9 +3,11 @@ package fr.adbonnin.mc.skygrid.model.block;
 import fr.adbonnin.xtra.collect.RandomCollection;
 import org.bukkit.Material;
 
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
 
-public class RandomBlockGroupContainer implements BlockGroupContainer {
+public class RandomBlockGroup implements BlockGroup {
 
     private final RandomCollection<BlockGroup> blocks = new RandomCollection<>();
 
@@ -14,8 +16,7 @@ public class RandomBlockGroupContainer implements BlockGroupContainer {
         return blocks.get(random).getRandomBlock(random);
     }
 
-    @Override
-    public void addBlockGroup(double weight, BlockGroup block) {
-        blocks.add(weight, block);
+    public void addBlockGroups(Iterator<? extends Map.Entry<? extends BlockGroup, ? extends Number>> blockGroups) {
+        blocks.addAll(blockGroups);
     }
 }

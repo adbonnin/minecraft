@@ -9,17 +9,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
+import static fr.adbonnin.xtra.collect.XtraIterators.putAll;
+
 public class Config {
-
-    public static final double DEFAULT_BLOCK_GROUP_WEIGHT = 100;
-
-    public static final double DEFAULT_CREATURE_GROUP_WEIGHT = 1;
-
-    public static final int DEFAULT_CHEST_ITEM_COUNT = 1;
-
-    public static final boolean DEFAULT_PREVENT_SAND_FALL_WITH_CACTUS = true;
 
     private final Map<String, SkyGridWorld> worlds = new HashMap<>();
 
@@ -31,20 +26,24 @@ public class Config {
 
     private final Map<String, CreatureGroup> creatureGroups = new HashMap<>();
 
-    private double defaultBlockGroupWeight = DEFAULT_BLOCK_GROUP_WEIGHT;
+    private double defaultBlockGroupWeight;
 
-    private double defaultCreatureGroupWeight = DEFAULT_CREATURE_GROUP_WEIGHT;
+    private double defaultCreatureGroupWeight;
 
-    private int defaultChestItemCount = DEFAULT_CHEST_ITEM_COUNT;
+    private int defaultChestItemCount;
 
-    private boolean preventSandFallWithCactus = DEFAULT_PREVENT_SAND_FALL_WITH_CACTUS;
+    private boolean preventSandFallWithCactus;
 
     public SkyGridWorld findWorld(String name) {
         return worlds.get(name);
     }
 
-    public void addWorld(String name, SkyGridWorld world) {
-        this.worlds.put(name, world);
+    public void addWorlds(Map<String, SkyGridWorld> worlds) {
+        this.worlds.putAll(worlds);
+    }
+
+    public Material findMaterial(String name) {
+        return Material.getMaterial(name);
     }
 
     public BlockGroup findBlockGroup(String name) {
@@ -64,8 +63,12 @@ public class Config {
         return null;
     }
 
-    public Material findMaterial(String name) {
-        return Material.getMaterial(name);
+    public void addBlockGroup(String name, BlockGroup blockGroup) {
+        this.blockGroups.put(name, blockGroup);
+    }
+
+    public void addBlockGroups(Iterator<? extends Map.Entry<? extends String, ? extends BlockGroup>> blockGroups) {
+        putAll(this.blockGroups, blockGroups);
     }
 
     public EntityType findEntityType(String name) {
@@ -75,26 +78,6 @@ public class Config {
         catch (IllegalArgumentException e) {
             return null;
         }
-    }
-
-    public void addBlockGroup(String name, BlockGroup blockGroup) {
-        this.blockGroups.put(name, blockGroup);
-    }
-
-    public ChestItems findChestItems(String name) {
-        return chestItems.get(name);
-    }
-
-    public void addChestItem(String name, ChestItems chestItems) {
-        this.chestItems.put(name, chestItems);
-    }
-
-    public BlockGroup findPlants(Material material) {
-        return plants.get(material);
-    }
-
-    public void addPlants(Material material, BlockGroup plant) {
-        this.plants.put(material, plant);
     }
 
     public CreatureGroup findCreatureGroup(String name) {
@@ -116,6 +99,26 @@ public class Config {
 
     public void addCreatureGroup(String name, CreatureGroup creatureGroup) {
         this.creatureGroups.put(name, creatureGroup);
+    }
+
+    public void addCreatureGroups(Iterator<? extends Map.Entry<? extends String, ? extends CreatureGroup>> creatureGroups) {
+        putAll(this.creatureGroups, creatureGroups);
+    }
+
+    public ChestItems findChestItems(String name) {
+        return chestItems.get(name);
+    }
+
+    public void addChestItems(Iterator<? extends Map.Entry<? extends String, ? extends ChestItems>> chestItems) {
+        putAll(this.chestItems, chestItems);
+    }
+
+    public BlockGroup findPlants(Material material) {
+        return plants.get(material);
+    }
+
+    public void addPlants(Iterator<? extends Map.Entry<Material, BlockGroup>> plants) {
+        putAll(this.plants, plants);
     }
 
     public double getDefaultBlockGroupWeight() {

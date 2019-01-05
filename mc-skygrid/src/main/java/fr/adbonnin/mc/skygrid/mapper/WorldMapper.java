@@ -2,62 +2,48 @@ package fr.adbonnin.mc.skygrid.mapper;
 
 import fr.adbonnin.mc.skygrid.model.Config;
 import fr.adbonnin.mc.skygrid.model.SkyGridWorld;
-import fr.adbonnin.mc.skygrid.model.chest.ChestItems;
-import fr.adbonnin.mc.skygrid.model.chest.ChestQuantity;
 import fr.adbonnin.xtra.bukkit.yaml.YamlNode;
-import fr.adbonnin.xtra.io.ReaderSplitter;
 
-public enum WorldMapper {
-    INSTANCE;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-    public SkyGridWorld map(YamlNode worldNode, Config config) {
+public class WorldMapper {
+
+    private final BlockGroupMapper blockGroupMapper;
+
+    private final CreatureGroupMapper creatureGroupMapper;
+
+    private final ChestItemsMapper chestItemsMapper;
+
+    public WorldMapper(Config config) {
+        this.blockGroupMapper = new BlockGroupMapper(config);
+        this.creatureGroupMapper = new CreatureGroupMapper(config);
+        this.chestItemsMapper = new ChestItemsMapper(config);
+    }
+
+    public Map<String, SkyGridWorld> mapByName(YamlNode objectNode) {
+        final Map<String, SkyGridWorld> worlds = new HashMap<>();
+
+        final Iterator<Map.Entry<String, YamlNode>> itr = objectNode.fields();
+        while (itr.hasNext()) {
+            final Map.Entry<String, YamlNode> next = itr.next();
+
+            final String name = next.getKey();
+            final SkyGridWorld world = map(next.getValue());
+            worlds.put(name, world);
+        }
+
+        return worlds;
+    }
+
+    public SkyGridWorld map(YamlNode worldNode) {
         final SkyGridWorld world = new SkyGridWorld();
-        world.setHeight(worldNode.get("height").intValue());
-        mapBlockGroups(worldNode.get("block-groups"), world, config);
-        mapChestItems(worldNode.get("chest-items"), world, config);
-        mapChestQuantities(worldNode.get("chest-quantities"), world);
-        mapCreatureSpawners(worldNode.get("creature-spawners"), world, config);
+        world.setHeight(worldNode.asInt("height", SkyGridWorld.DEFAULT_HEIGHT));
+        world.addBlockGroups(blockGroupMapper.map(worldNode.path("block-groups")));
+        world.addChestItems(chestItemsMapper.map(worldNode.path("chest-items")));
+        world.addChestQuantities(chestItemsMapper.mapQuantities(worldNode.path("chest-quantities")));
+        world.addCreatureGroups(creatureGroupMapper.map(worldNode.path("creature-spawners")));
         return world;
-    }
-
-    private void mapBlockGroups(YamlNode blockGroupsNode, SkyGridWorld world, Config config) {
-        BlockGroupMapper.INSTANCE.mapBlockGroups(blockGroupsNode, world, config);
-    }
-
-    @SuppressWarnings("Duplicates")
-    private void mapChestItems(YamlNode chestItemsNode, SkyGridWorld world, Config config) {
-        for (YamlNode chestItemNode : chestItemsNode) {
-            final ReaderSplitter splitter = new ReaderSplitter(chestItemNode.textValue(), ":");
-
-            final String name = splitter.next(null);
-            if (name == null) {
-                continue;
-            }
-
-            final ChestItems chestItems = config.findChestItems(name);
-            if (chestItems == null) {
-                throw new IllegalArgumentException("chest item can't be found; " +
-                        "name: " + name);
-            }
-
-            final double weight = splitter.nextAsDouble(config.getDefaultBlockGroupWeight());
-            world.addChestItems(weight, chestItems);
-        }
-    }
-
-    private void mapChestQuantities(YamlNode quantitiesNode, SkyGridWorld world) {
-        for (YamlNode quantityNode : quantitiesNode) {
-            final ReaderSplitter splitter = new ReaderSplitter(quantityNode.textValue(), ":");
-            final int quantity = splitter.nextAsInt(-1);
-            final int weight = splitter.nextAsInt(-1);
-
-            if (quantity > 0 && weight > 0) {
-                world.addChestQuantity(weight, new ChestQuantity(quantity));
-            }
-        }
-    }
-
-    private void mapCreatureSpawners(YamlNode creatureSpawnersNode, SkyGridWorld world, Config config) {
-        CreatureGroupMapper.INSTANCE.map(creatureSpawnersNode, world, config);
     }
 }

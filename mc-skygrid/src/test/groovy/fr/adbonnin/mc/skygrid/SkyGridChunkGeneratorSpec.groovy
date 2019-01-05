@@ -44,7 +44,7 @@ class SkyGridChunkGeneratorSpec extends Specification {
         def chunkData = Mock(ChunkGenerator.ChunkData)
 
         skyGridWorld.setHeight(height)
-        skyGridWorld.addBlockGroup(1, new MaterialBlockGroup(material))
+        skyGridWorld.addBlockGroups([(new MaterialBlockGroup(material)): 1].entrySet().iterator())
 
         when:
         def result = chunkGenerator.generateChunkData(mockWorld, mockRandom, 0, 0, mockBiomes)
